@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Eurovision 2024 </title>
+
+    <style>
+      
+      body {background-color: rgb(224, 236, 200);}
+
+      p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      
+      .singer-picture {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .start-phrase {
+        font-size: 50px;
+        color: blue;
+        text-align: center;
+      }
+
+      .forward-button {
+        background-color: rgb(21, 110, 44);
+        color:yellowgreen;
+        border: none;
+        padding: 10px;
+        margin-left: 90px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 50% 20% / 10% 40%;
+        transition: background-color 0.30s, color 0.30s, box-shadow 0.30s;
+        margin-top: 50px;
+        text-align: center;
+
+      }
+
+      .forward-button:hover {
+      background-color: rgb(185, 22, 145);
+      color: black;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .start-block-div {
+      width: 500px;
+      height: 500px;
+      background-color: rgb(235, 233, 140);
+      margin: auto;
+    }
+
+    .button-div {
+      margin-left: 45px;
+    }
+
+    .answer-input {
+      display: none;
+      background-color: greenyellow;
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    .question {
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    .submit-button {
+      display: none;
+      background-color: greenyellow;
+      margin: auto;
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .quality-result {
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    .answer-input:focus::placeholder {
+      color: transparent;
+    }
+
+    </style>
+  </head>
+
+  <body>
+  
+  
+    <div class="start-block-div">
+      <p class="js-button start-phrase"> Let's go, start the quiz Daniel</p>
+      <p class="question">
+        Which country has this picture as its Eurovision profile? One chance!
+      </p>
+      <input class="answer-input js-answer-input" placeholder="Type your answer here" onkeydown="
+        
+      ">
+      <button class="submit-button js-submit" onclick="
+        paragraphResult.innerHTML === '';
+        storeAnswer();
+      ">
+        Submit answer
+      </button>
+     
+      <p class="quality-result js-quality-result">
+        
+      </p>
+      <div class="button-div">
+        <button class="forward-button js-forward-button" onclick="
+        ForwardFunction(); 
+          if(buttonForward.innerText === 'Click to move forward') {
+            buttonForward.innerHTML = 'Next country';
+            buttonForward.classList.add('js-next-country')
+          }
+        "> Click to move forward</button>
+      </div>
+      
+     
+    </div>
+   
+    
+
+
+
+   <script>
+    
+     Array.prototype.shuffle = function(){
+      var i = this.length,
+          j,
+         tmp;
+        while (i > 1) {
+          j = Math.floor(Math.random()*i--);
+          tmp = this[i];
+          this[i] = this[j];
+          this[j] = tmp;
+        }
+      return this;
+      };
+
+        var countryPictures = [];
+        countryPictures.push('<img class="singer-picture" src="./pictures/albania.jpeg" alt="albania">', '<img class="singer-picture" src="./pictures/armenia.jpeg">', '<img class="singer-picture" src="./pictures/australia.jpeg">', '<img class="singer-picture" src="./pictures/austria.jpeg">', '<img class="singer-picture" src="./pictures/azerbaijan.jpeg">')
+        countryPictures.shuffle();
+        
+
+        const input = document.querySelector('.answer-input');
+        const buttonForward = document.querySelector('.js-forward-button');
+        const question = document.querySelector('.question');
+        const buttonSubmit = document.querySelector('.submit-button');
+        const paragraphResult = document.querySelector('.quality-result');
+        const buttonNextCountry = document.querySelector('.js-next-country');
+
+        buttonForward.addEventListener("click", () => input.style.display = "block");
+        buttonForward.addEventListener("click", () => question.style.display = "block");
+        buttonForward.addEventListener("click", () => buttonSubmit.style.display = "block");
+        buttonForward.addEventListener("click", () => paragraphResult.style.display = "block");
+        buttonForward.addEventListener("click", () => button.style.display = "block");
+
+        
+
+        function ForwardFunction() {
+          
+         
+
+          if(countryPictures.length > 0){
+          document.querySelector('.js-button').innerHTML = countryPictures.slice(-1);
+          countryPictures.pop(countryPictures[0]);
+        }
+        
+
+          if (countryPictures.length === 0) {
+            buttonForward.addEventListener("click", () =>input.style.display = "none");
+            buttonForward.addEventListener("click", () =>buttonForward.style.display = "none");
+            buttonForward.addEventListener("click", () =>question.style.display = "none");
+            buttonForward.addEventListener("click", () =>buttonSubmit.style.display = "none");
+            buttonForward.addEventListener("click", () =>paragraphResult.style.display = "none");
+            buttonForward.addEventListener("click", () =>document.querySelector('.js-button').style.display = "none");
+          } 
+
+         
+
+         paragraphResult.innerHTML = '';
+         input.value = '';
+        
+      }
+
+     
+
+      function storeAnswer() {
+
+        
+
+        const inputElement = document.querySelector('.js-answer-input');
+        const answer = inputElement.value.toUpperCase();
+      
+
+        var numeImagineElement = document.querySelector('.singer-picture');
+
+        console.log(answer);
+        console.log(numeImagineElement);
+        
+        const imagineElement = document.querySelector('img');
+        console.log(imagineElement);
+
+        const caleImagine = imagineElement.src;
+        console.log(caleImagine);
+
+        const numaImagine = caleImagine.substring(caleImagine.lastIndexOf('/')+1);
+        console.log(numaImagine);
+
+        const numeImagine2 = caleImagine.split('.').slice(0, -1).join('.').toUpperCase().substring(caleImagine.lastIndexOf('/')+1);
+        console.log(numeImagine2);
+
+        console.log('---');
+        console.log(answer);
+        console.log(numeImagine2);
+       
+       
+        if(answer === numeImagine2) {
+          paragraphResult.innerHTML = `Your answer is correct: ${answer} congratz!` ;
+        } else if (answer === ''){
+          paragraphResult.innerHTML = `You have to quess if you don't know` ;
+        } 
+        else {
+          paragraphResult.innerHTML = `Your answer ${answer} is wrong, correct answer is ${numeImagine2}`;
+         
+          buttonSubmit.addEventListener("click", () =>buttonSubmit.style.display = "none");
+          
+        }
+          input.value = '';
+        
+      }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') 
+              storeAnswer();
+            }
+      
+     
+
+   </script>
+  </body>
+  
+</html>
